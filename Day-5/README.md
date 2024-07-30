@@ -14,29 +14,36 @@
   ```bash
   sudo usermod -aG docker $USER
   ```
-#
-## Steps for CI/CD in Gitlab:
-
-1) Become root user :
+  OR
+ - Become root user :
     ```bash
     sudo su
     ```
 #
-2) Provide Docker socket permission : 
+ - Provide Docker socket permission : 
     ```bash
     chmod 777 /var/run/docker.sock
     ```
 #
-3) Go to UI and create .gitlab-ci.yml file in the root directory of your repository
+- To check the status of the gitlab-runner. It is running or not
+  ```bash
+  sudo su
+  gitlab-runner status
+  exit
+  ```
+
+## Steps for CI/CD in Gitlab:
+
+- Go to UI and create .gitlab-ci.yml file in the root directory of your repository
     ```bash
     vim .gitlab-ci.yml
     ```
 
 #
-4) Create two variables for docker login, to create variables <a href="https://github.com/DevMadhup/GitLab-Zero-to-Hero/blob/main/Day-3/README.md">Variables</a>
+- Create two variables for docker login, to create variables <a href="https://github.com/DevMadhup/GitLab-Zero-to-Hero/blob/main/Day-3/README.md">Variables</a>
 
 #
-5) Paste the below code in .gitlab-ci file :
+- Paste the below code in .gitlab-ci file :
 ```bash
 
   stages:
@@ -77,8 +84,8 @@ deploy_job:
 ```
 
 #
-7) Before building the pipeline -> ensure that Runner is enabled for your project
-6) Go to Build --> pipeline, to see the pipeline status.
+- Before building the pipeline -> ensure that Runner is enabled for your project
+- Go to Build --> pipeline, to see the pipeline status.
 
 If you get below error:
 
@@ -96,7 +103,7 @@ sudo service docker restart
 ```
 
 #
-7) Once all jobs are successfully, copy the public IP of your instance and access it on 
+- Once all jobs are successfully, copy the public IP of your instance and access it on 
     ```bash
     <public-ip>:8000
     ```
