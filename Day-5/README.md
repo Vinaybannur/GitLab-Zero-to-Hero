@@ -77,6 +77,7 @@ deploy_job:
 ```
 
 #
+7) Before building the pipeline -> ensure that Runner is enabled for your project
 6) Go to Build --> pipeline, to see the pipeline status.
 
 If you get below error:
