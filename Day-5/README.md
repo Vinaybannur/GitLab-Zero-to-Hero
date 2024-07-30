@@ -23,7 +23,7 @@
 #
 3) Go to UI and create .gitlab-ci.yml file in the root directory of your repository
     ```bash
-    vi .gitlab-ci.yml
+    vim .gitlab-ci.yml
     ```
 
 #
@@ -76,6 +76,20 @@ Deploy:
 
 #
 6) Go to Build --> pipeline, to see the pipeline status.
+
+if you get below error:
+```bash
+permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/build?buildargs=%7B%7D&cachefrom=%5B%5D&cgroupparent=&cpuperiod=0&cpuquota=0&cpusetcpus=&cpusetmems=&cpushares=0&dockerfile=Dockerfile&labels=%7B%7D&memory=0&memswap=0&networkmode=default&rm=1&shmsize=0&t=node-app%3Alatest&target=&ulimits=null&version=1": dial unix /var/run/docker.sock: connect: permission denied
+Cleaning up project directory and file based variables
+00:00
+ERROR: Job failed: exit status 1
+```
+
+To solve that error use below commands in instance:
+```bash
+sudo usermod -aG docker gitlab-runner
+sudo service docker restart
+```
 
 #
 7) Once all jobs are successfully, copy the public IP of your instance and access it on 
