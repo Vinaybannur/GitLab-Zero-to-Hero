@@ -83,8 +83,8 @@ if [ "$SHLVL" = 1 ]; then
     [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
 fi
 ```
+- to restart the runner
 - step5: gitlab-runner run
-  to restart the runner
 
 #
 - Check CI/CD pipeline logs to see where project ran:
