@@ -31,6 +31,10 @@
   gitlab-runner status
   exit
   ```
+- If gitlab-runner is not running, run it manually
+  ```bash
+    gitlab-runner run
+    ```
 
 ## Steps for CI/CD in Gitlab:
 
