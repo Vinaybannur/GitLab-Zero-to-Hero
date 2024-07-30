@@ -5,9 +5,15 @@
 ### Pre-requisites to implement this project:
 -  Create 1 virtual machine on AWS with 2 CPU, 4GB of RAM (t2.medium)
 - Setup it as runner in Gitlab <a href="https://github.com/DevMadhup/GitLab-Zero-to-Hero/blob/main/Day-4/README.md">Runner</a>.
-- Sudo permission
 - Install docker
-
+  ```bash
+  sudo apt-get update
+  sudo apt-get insatll docker.io
+  ```
+  - Sudo permission
+  ```bash
+  sudo usermod -aG docker $USER
+  ```
 #
 ## Steps for CI/CD in Gitlab:
 
@@ -23,7 +29,7 @@
 #
 3) Go to UI and create .gitlab-ci.yml file in the root directory of your repository
     ```bash
-    vi .gitlab-ci.yml
+    vim .gitlab-ci.yml
     ```
 
 #
@@ -32,46 +38,42 @@
 #
 5) Paste the below code in .gitlab-ci file :
 ```bash
-stages:
-  - version-check
-  - build-docker-file
-  - push-docker-file
+
+  stages:
+  - build
+  - test
+  - push_to_dockerhub
   - deploy
 
-Version-Checks:
-  stage: version-check
-  tags:
-    - linux
-    - ubuntu
+build_job:
+  stage: build
   script:
-    - docker --version
-    - npm --version
-
-Docker-Build:
-  stage: build-docker-file
+    - docker build -t node-app:latest .
   tags:
-    - linux
-    - ubuntu
-  script:
-    - docker build -t madhupdevops/nodetodoapp .
-    - docker images
+    - dev
 
-Push-Artifacts:
-  stage: push-docker-file
+test_job:
+  stage: test
+  script:
+    - echo "testing.."
   tags:
-    - linux
-    - ubuntu
-  script:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASS
-    - docker push madhupdevops/nodetodoapp:latest
+    - dev
 
-Deploy:
+push_job:
+  stage: push_to_dockerhub
+  script:
+    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+    - docker image tag node-app:latest $DOCKERHUB_USER/node-app:latest
+    - docker push $DOCKERHUB_USER/node-app:latest
+  tags:
+    - dev
+
+deploy_job:
   stage: deploy
-  tags:
-    - linux
-    - ubuntu
   script:
-    - docker run -itd --name nodeapp -p 8000:8000 madhupdevops/nodetodoapp:latest
+    - docker compose up -d
+  tags:
+    - dev
 ```
 
 #
