@@ -73,12 +73,18 @@ build_job:
 - If your pipeline fails with error like below
 > ERROR: Job failed: prepare environment: exit status 1. Check https://docs.gitlab.com/runner/shells/index.html#shell-profile-loading for more informatio
 
-- To troubleshoot this error, check <b>/home/gitlab-runner/.bash_logout</b>. For example, if the .bash_logout file has a script section like the following, comment it out and restart the pipeline:
+- To troubleshoot this error
+- step1: cd /home/gitlab-runner
+- step2: ls -a
+- step3: vim .bash_logout
+- step4: comment the below lines
 ```bash
 if [ "$SHLVL" = 1 ]; then
     [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
 fi
 ```
+- step5: gitlab-runner run
+  to restart the runner
 
 #
 - Check CI/CD pipeline logs to see where project ran:
